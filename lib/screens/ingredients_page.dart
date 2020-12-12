@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ratatouille/screens/result_page.dart';
 
 int count = 1;
-List<String> ingredients = [];
+List<String> ingredients = ['carrot'];
+String item;
 
 class IngredientsScreen extends StatefulWidget {
   static const String id = 'ingredients_screen';
@@ -16,14 +18,6 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff7EC5C1),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xffEE4D4D),
-          onPressed: () {
-            setState(() {
-              count++;
-            });
-          },
-          child: Image.asset('images/add.png')),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,45 +94,70 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                       style: GoogleFonts.rambla(
                           color: Color(0xff737373), fontSize: 17.0),
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 20.0,
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                      child: TextField(
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xff7EC5C1),
+                          hintText: "\tName of ingredient",
+                          hintStyle: TextStyle(color: Colors.white),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              print('oof');
+                              if (item != null) {
+                                setState(() {
+                                  ingredients.add(item);
+                                });
+                              }
+                              print(ingredients);
+                            },
+                            child: Icon(
+                              Icons.subdirectory_arrow_left_rounded,
+                              color: Colors.white,
+                            ),
+                          ),
+                          //Image.asset('images/search.png'),
+                        ),
+                        onChanged: (value) {
+                          item = value;
+                          print('enter pressed');
+                        },
+                      ),
                     ),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: count,
+                        itemCount: ingredients.length,
                         itemBuilder: (context, index) {
                           return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                              color: Color(0xffF9D6DC),
+                            ),
                             margin: EdgeInsets.symmetric(
                                 horizontal: 40.0, vertical: 10.0),
-                            child: TextField(
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xffF9D6DC),
-                                hintText: "Name of ingredient",
-                                hintStyle: TextStyle(color: Colors.black54),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  borderSide: BorderSide.none,
-                                ),
-                                suffixIcon: InkWell(
-                                  onTap: () {
-                                    print('oof');
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: Image.asset('images/cross.png'),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    ingredients[index],
+                                    style: GoogleFonts.rambla(fontSize: 20.0),
                                   ),
-                                ),
-                                //Image.asset('images/search.png'),
+                                  InkWell(
+                                      onTap: () => deleteItem(index),
+                                      child: Image.asset('images/cross.png'))
+                                ],
                               ),
-                              onChanged: (value) {
-                                ingredients[index] = value;
-                                print(ingredients);
-                              },
                             ),
                           );
                         },
@@ -157,7 +176,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                           child: MaterialButton(
                             onPressed: () {
                               print('pressed');
-                              //Navigator.pushNamed(context, IngredientsScreen.id);
+                              Navigator.pushNamed(context, ResultScreen.id);
                             },
                             minWidth: 150.0,
                             height: 30.0,
@@ -181,5 +200,11 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
         ),
       ),
     );
+  }
+
+  void deleteItem(index) {
+    setState(() {
+      ingredients.removeAt(index);
+    });
   }
 }
