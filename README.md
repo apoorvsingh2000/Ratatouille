@@ -6,11 +6,23 @@ A new Flutter application.
 
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+# Introduction
+An app that recommends recipies and dishes to you based on the ingredients.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+# How to use
+There is a relese and a debug version attached. You can install the app on your android phone. 
+Enter the name of the ingredients that you have
+The App will smartly recommend you dishes based on those ingredients.
+Another AI feature that identifies the ingredient and tells you what it is using Image Recognition.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Challenges faced
+Working with different aspects of AI and Database.
+Making search option.
+
+# Completion status
+Completed.
+
+# Learning from the hack
+There is no ending to learning, there is always more to learn.
+
+
