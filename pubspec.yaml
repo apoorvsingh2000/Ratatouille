@@ -13,6 +13,11 @@ dependencies:
   cupertino_icons: ^1.0.0
   google_fonts: ^1.1.1
   http: ^0.12.2
+  camera: ^0.5.8+17
+#  cloud_firestore: ^0.13.7
+  firebase_database:
+  firebase_core:
+  firebase_storage:
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -15,17 +16,27 @@ class _ResultScreenState extends State<ResultScreen> {
   DishData dishData = new DishData();
   List<String> dishes = [];
 
+  final _firebaseDbRef = FirebaseDatabase.instance.reference();
+
   @override
   void initState() {
     super.initState();
   }
 
   Future<List<String>> getDishes() async {
-    var data =
-        await dishData.getDishData('https://ratatouille-spaag.herokuapp.com/');
-    for (var item in data) {
+    var result = (await FirebaseDatabase.instance
+            .reference()
+            .child('recipe')
+            .child('list')
+            .once())
+        .value;
+    for (var item in result) {
       dishes.add(item);
     }
+    dishes.add('Jalebi');
+    dishes.add('Halwa');
+    dishes.add('Kheer');
+    dishes.add('Milk Pudding');
     return dishes;
   }
 
@@ -63,7 +74,7 @@ class _ResultScreenState extends State<ResultScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Container(
                 child: Text(
-                  'Panner Tikka Masala',
+                  'Imarti',
                   style:
                       GoogleFonts.dancingScript(color: Colors.white, fontSize: 40),
                 ),
@@ -73,8 +84,9 @@ class _ResultScreenState extends State<ResultScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  "images/paneer.png",
+                  "images/imarti.png",
                   height: 220.0,
+                  width: 280.0,
                 ),
                 InkWell(
                   child: Icon(
@@ -109,7 +121,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         return Center(child: CircularProgressIndicator());
                       }
                       return ListView.builder(
-                          itemCount: dishes.length,
+                          itemCount: dishes.length - 1,
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {},
@@ -118,7 +130,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 children: [
                                   SizedBox(height: 55.0, width: 25.0),
                                   Text(
-                                    dishes[index],
+                                    dishes[index + 1],
                                     style: GoogleFonts.dancingScript(
                                         color: Color(0xff757575), fontSize: 25.0),
                                   ),
@@ -155,7 +167,9 @@ class _ResultScreenState extends State<ResultScreen> {
                         color: Colors.white,
                       ),
                       color: color3,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
                 ),

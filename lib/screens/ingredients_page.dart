@@ -1,6 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ratatouille/models/camera.dart';
 import 'package:ratatouille/screens/result_page.dart';
 import 'package:ratatouille/models/ingredient_data.dart';
 
@@ -10,17 +12,30 @@ String item;
 
 class IngredientsScreen extends StatefulWidget {
   static const String id = 'ingredients_screen';
+
   @override
   _IngredientsScreenState createState() => _IngredientsScreenState();
 }
 
 class _IngredientsScreenState extends State<IngredientsScreen> {
   IngredientData ingredientData = new IngredientData();
+  final _firebaseDbRef = FirebaseDatabase.instance.reference();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff7EC5C1),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.camera_alt_outlined),
+        onPressed: () {
+          Navigator.pushNamed(context, CameraScreen.id);
+        },
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,10 +194,10 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                           child: MaterialButton(
                             onPressed: () async {
                               print('pressed');
-                              await ingredientData.postIngredientData(
-                                  'https://ratatouille-spaag.herokuapp.com/',
-                                  ingredients);
-                              //Navigator.pushNamed(context, ResultScreen.id);
+                              await _firebaseDbRef.child('ingredient').set(
+                                {'list': ingredients},
+                              );
+                              Navigator.pushNamed(context, ResultScreen.id);
                             },
                             minWidth: 150.0,
                             height: 30.0,
