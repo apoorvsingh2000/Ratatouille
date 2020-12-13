@@ -3,11 +3,19 @@
 A new Flutter application.
 
 ## Getting Started
-
 This project is a starting point for a Flutter application.
 
 # Introduction
 An app that recommends recipies and dishes to you based on the ingredients.
+
+# Technologies Used
+Flutter 
+Firebase
+Python
+Machine Learning
+AI
+Flask
+Heroku
 
 # How to use
 There is a relese and a debug version attached. You can install the app on your android phone. 
