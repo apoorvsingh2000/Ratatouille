@@ -15,4 +15,14 @@ class NetworkHelper {
       print(response.statusCode);
     }
   }
+
+  Future postData(List<String> ingredients) async {
+    http.Response response =
+        await http.post(url, body: jsonEncode({'ingredients': ingredients}));
+    if (response.statusCode == 200) {
+      print('List posted successfully');
+    } else {
+      print('List post failed');
+    }
+  }
 }

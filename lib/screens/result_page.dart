@@ -144,16 +144,19 @@ class _ResultScreenState extends State<ResultScreen> {
                 SizedBox(
                   width: 50.0,
                 ),
-                Container(
-                  height: 40.0,
-                  child: RaisedButton(
-                    shape: CircleBorder(),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
+                InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    height: 40.0,
+                    child: RaisedButton(
+                      shape: CircleBorder(),
+                      child: Icon(
+                        Icons.arrow_back_ios_rounded,
+                        color: Colors.white,
+                      ),
+                      color: color3,
+                      onPressed: () {},
                     ),
-                    color: color3,
-                    onPressed: () {},
                   ),
                 ),
                 Column(

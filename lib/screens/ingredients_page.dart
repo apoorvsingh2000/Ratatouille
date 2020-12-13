@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ratatouille/screens/result_page.dart';
+import 'package:ratatouille/models/ingredient_data.dart';
 
 int count = 1;
-List<String> ingredients = ['carrot'];
+List<String> ingredients = [];
 String item;
 
 class IngredientsScreen extends StatefulWidget {
@@ -14,6 +15,8 @@ class IngredientsScreen extends StatefulWidget {
 }
 
 class _IngredientsScreenState extends State<IngredientsScreen> {
+  IngredientData ingredientData = new IngredientData();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,9 +177,12 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(30.0),
                           child: MaterialButton(
-                            onPressed: () {
+                            onPressed: () async {
                               print('pressed');
-                              Navigator.pushNamed(context, ResultScreen.id);
+                              await ingredientData.postIngredientData(
+                                  'https://ratatouille-spaag.herokuapp.com/',
+                                  ingredients);
+                              //Navigator.pushNamed(context, ResultScreen.id);
                             },
                             minWidth: 150.0,
                             height: 30.0,
